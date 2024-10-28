@@ -1,6 +1,6 @@
 # 사용 중: Dev 빌드용
 name: Manual CI-CD
-run-name: 🚀 build and deploy bible search app
+run-name: 🚀 build and deploy sec image app
 
 on: workflow_dispatch
 
@@ -20,7 +20,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t rjchart/bible-search-app:$IMAGE_TAG .
+          docker build -t rjchart/sec-image-app:$IMAGE_TAG .
           echo "Pushing image to Docker hub..."
 
       - name: docker login
@@ -35,7 +35,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker push rjchart/bible-search-app:$IMAGE_TAG
+          docker push rjchart/sec-image-app:$IMAGE_TAG
 
       - name: Application CI/CD 호출
         uses: peter-evans/repository-dispatch@v3
@@ -46,10 +46,10 @@ jobs:
           client-payload: |-
             {
               "spec": {
-                "name": "bible-search-app",
+                "name": "sec-image-app",
                 "project": "toy-project",
                 "image": {
-                  "repository": "rjchart/bible-search-app",
+                  "repository": "rjchart/sec-image-app",
                   "tag": "${{ github.sha }}"
                 },
                 "service": {
