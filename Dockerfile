@@ -4,7 +4,6 @@ FROM node:20 as build
 WORKDIR /app
 
 COPY package*.json ./
-COPY .yarnrc.yml .yarnrc.yml
 COPY yarn.lock yarn.lock
 RUN yarn install
 
